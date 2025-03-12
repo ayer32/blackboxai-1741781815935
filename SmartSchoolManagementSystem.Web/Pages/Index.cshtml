@@ -1,0 +1,75 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-4">
+    <div class="jumbotron bg-light p-5 rounded">
+        <h1 class="display-4">Welcome to Smart School Management System</h1>
+        <p class="lead">A comprehensive solution for managing your educational institution.</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user-graduate"></i> Students</h5>
+                    <p class="card-text">Manage student records, attendance, and academic performance.</p>
+                    <a asp-page="/School/Students/Index" class="btn btn-primary">Manage Students</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Teachers</h5>
+                    <p class="card-text">Handle teacher assignments, subjects, and class management.</p>
+                    <a asp-page="/School/Teachers/Index" class="btn btn-primary">Manage Teachers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-book"></i> Library</h5>
+                    <p class="card-text">Track books, manage lending, and monitor returns.</p>
+                    <a asp-page="/Library/Books/Index" class="btn btn-primary">Access Library</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-calendar-check"></i> Attendance</h5>
+                    <p class="card-text">Record and monitor student attendance.</p>
+                    <a asp-page="/School/Attendance/Index" class="btn btn-primary">Manage Attendance</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-hand-holding-heart"></i> Donations</h5>
+                    <p class="card-text">Track and manage donations to the school.</p>
+                    <a asp-page="/Donations/Index" class="btn btn-primary">Manage Donations</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-book-open"></i> Subjects</h5>
+                    <p class="card-text">Manage subjects and their assignments to classes.</p>
+                    <a asp-page="/School/Subjects/Index" class="btn btn-primary">Manage Subjects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
