@@ -1,0 +1,96 @@
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    // Custom validation methods
+    $.validator.addMethod('datenotinfuture', function(value, element) {
+        if (this.optional(element)) {
+            return true;
+        }
+        var now = new Date();
+        var myDate = new Date(value);
+        return myDate <= now;
+    }, 'Date cannot be in the future.');
+
+    $.validator.addMethod('minimumage', function(value, element, minAge) {
+        if (this.optional(element)) {
+            return true;
+        }
+        var today = new Date();
+        var birthDate = new Date(value);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age >= minAge;
+    }, 'You must be at least {0} years old.');
+
+    $.validator.addMethod('phonenumber', function(value, element) {
+        return this.optional(element) || /^\+?[\d\s-]+$/.test(value);
+    }, 'Please enter a valid phone number.');
+
+    // Custom validation adapters
+    $.validator.unobtrusive.adapters.add('datenotinfuture', [], function(options) {
+        options.rules['datenotinfuture'] = true;
+        options.messages['datenotinfuture'] = options.message;
+    });
+
+    $.validator.unobtrusive.adapters.add('minimumage', ['age'], function(options) {
+        options.rules['minimumage'] = options.params.age;
+        options.messages['minimumage'] = options.message;
+    });
+
+    $.validator.unobtrusive.adapters.add('phonenumber', [], function(options) {
+        options.rules['phonenumber'] = true;
+        options.messages['phonenumber'] = options.message;
+    });
+
+    // Enhanced form validation
+    $(document).ready(function() {
+        // Add asterisk to required fields
+        $('form label').each(function() {
+            var label = $(this);
+            var input = $('#' + label.attr('for'));
+            if (input.prop('required')) {
+                label.append(' <span class="text-danger">*</span>');
+            }
+        });
+
+        // Real-time validation
+        $('form input, form select, form textarea').on('blur', function() {
+            $(this).valid();
+        });
+
+        // Prevent form submission on enter key
+        $('form input').keydown(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        // Custom error placement
+        $.validator.setDefaults({
+            errorElement: 'span',
+            errorClass: 'text-danger',
+            highlight: function(element, errorClass, validClass) {
+                $(element)
+                    .addClass('is-invalid')
+                    .removeClass('is-valid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element)
+                    .addClass('is-valid')
+                    .removeClass('is-invalid');
+            },
+            errorPlacement: function(error, element) {
+                if (element.parent('.input-group').length) {
+                    error.insertAfter(element.parent());
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+    });
+</script>
